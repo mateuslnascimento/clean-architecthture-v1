@@ -2,6 +2,14 @@
 
 const LoginRouter = require('../../presentation/routers/login');
 
+class MissingParamError extends Error {
+    constructor(paramName) {
+        super(`Missing param: ${paramName}`);
+        this.name = 'MissingParamError'
+    }
+}
+
+
 describe('Login Router', () => {
     
     test('Should return 400 if without email is provided', async () => {
@@ -13,6 +21,7 @@ describe('Login Router', () => {
         };
         const httpResponse = await sut.route(httpRequest);
         expect(httpResponse.statusCode).toBe(400);
+        expect(httpResponse.body).toEqual(new MissingParamError('email'));
     })
 
     test('Should return 400 if without password is provided', async () => {
@@ -24,6 +33,7 @@ describe('Login Router', () => {
         };
         const httpResponse = await sut.route(httpRequest);
         expect(httpResponse.statusCode).toBe(400);
+        expect(httpResponse.body).toEqual(new MissingParamError('password'));
     })
 
     test('Should return 500 if no httpRequest is provided', async () => {
