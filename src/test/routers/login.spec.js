@@ -1,10 +1,10 @@
 'use strict';
 
-const LoginRouter = require('../../presentation/routers/login.spec');
+const LoginRouter = require('../../presentation/routers/login');
 
 describe('Login Router', () => {
     
-    test('Should return 400 if without email provided', async () => {
+    test('Should return 400 if without email is provided', async () => {
         const sut = new LoginRouter();
         const httpRequest = {
             body: {
@@ -15,7 +15,7 @@ describe('Login Router', () => {
         expect(httpResponse.statusCode).toBe(400);
     })
 
-    test('Should return 400 if without password provided', async () => {
+    test('Should return 400 if without password is provided', async () => {
         const sut = new LoginRouter();
         const httpRequest = {
             body: {
@@ -24,5 +24,20 @@ describe('Login Router', () => {
         };
         const httpResponse = await sut.route(httpRequest);
         expect(httpResponse.statusCode).toBe(400);
+    })
+
+    test('Should return 500 if no httpRequest is provided', async () => {
+        const sut = new LoginRouter();
+
+        const httpResponse = await sut.route();
+        expect(httpResponse.statusCode).toBe(500);
+    })
+
+      test('Should return 500 if no httpRequest has no body', async () => {
+        const sut = new LoginRouter();
+        const httpRequest = {};
+
+        const httpResponse = await sut.route(httpRequest);
+        expect(httpResponse.statusCode).toBe(500);
     })
 })
