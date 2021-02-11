@@ -1,13 +1,7 @@
 'use strict';
 
 const LoginRouter = require('../../presentation/routers/login');
-
-class MissingParamError extends Error {
-    constructor(paramName) {
-        super(`Missing param: ${paramName}`);
-        this.name = 'MissingParamError'
-    }
-}
+const MissingParamError = require('../../presentation/helpers/missing-param-error');
 
 
 describe('Login Router', () => {
