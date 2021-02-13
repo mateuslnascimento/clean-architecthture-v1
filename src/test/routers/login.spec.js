@@ -7,7 +7,7 @@ const ServerError = require('../../presentation/helpers/server-error');
 
 const makeSut = () => {
     class AuthUsecaseSpy {
-        auth(email, password) {
+        async auth(email, password) {
             this.email = email;
             this.password = password;
             return this.accessToken
@@ -140,7 +140,7 @@ describe('Login Router', () => {
 
     test('Should return 500 if no AuthUseCase throws', async () => {
         class AuthUsecaseSpy {
-            auth() {
+            async auth() {
                 throw new Error();
             }
         }
