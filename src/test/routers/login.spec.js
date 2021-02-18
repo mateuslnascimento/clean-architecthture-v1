@@ -250,5 +250,19 @@ describe('Login Router', () => {
 
         const httpResponse = await sut.route(httpRequest);
         expect(httpResponse.statusCode).toBe(500);
-    })    
+    })  
+   
+    test('Should call EmailValidator with correct params', async () => {
+        const { sut, emaillValidatorSpy } = makeSut();
+         const httpRequest = {
+             body: {
+                email:"teste@teste.com",
+                password: '213215469@1'
+            }
+        };
+
+        const httpResponse = await sut.route(httpRequest);
+        expect(emaillValidatorSpy.email).toBe(httpRequest.body.email);
+    })
+ 
 })
