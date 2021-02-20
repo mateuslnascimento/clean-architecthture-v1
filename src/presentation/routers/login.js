@@ -1,33 +1,31 @@
-'use strict';
+'use strict'
 
-const HttpResponse = require('../helpers/http-response');
-const MissingParamError = require('../helpers/missing-param-error');
-const InvalidParamError = require('../helpers/invalid-param-error');
+const HttpResponse = require('../helpers/http-response')
+const MissingParamError = require('../errors/missing-param-error')
+const InvalidParamError = require('../errors/invalid-param-error')
 module.exports = class LoginRouter {
-    constructor(authUseCase, emailValidator) {
-        this.authUseCase = authUseCase;
-        this.emailValidator = emailValidator;
-    };
+  constructor (authUseCase, emailValidator) {
+    this.authUseCase = authUseCase
+    this.emailValidator = emailValidator
+  };
 
-    async route(httpRequest) {
-        try {
-            const { body: { email, password } } = httpRequest;
+  async route (httpRequest) {
+    try {
+      const { body: { email, password } } = httpRequest
 
-            if (!email) return HttpResponse.badRequest(new MissingParamError('email'));
+      if (!email) return HttpResponse.badRequest(new MissingParamError('email'))
 
-            if (!this.emailValidator.isValid(email)) return HttpResponse.badRequest(new InvalidParamError('email'));
-            
-            if (!password) return HttpResponse.badRequest(new MissingParamError('password'));
+      if (!this.emailValidator.isValid(email)) return HttpResponse.badRequest(new InvalidParamError('email'))
 
-            const accessToken = await this.authUseCase.auth(email, password);
+      if (!password) return HttpResponse.badRequest(new MissingParamError('password'))
 
-            if (!accessToken) return HttpResponse.unauthorized();
-        
-            return HttpResponse.ok({ accessToken });
+      const accessToken = await this.authUseCase.auth(email, password)
 
-        } catch (error) {
-            return HttpResponse.serverError();
-        }
-        
+      if (!accessToken) return HttpResponse.unauthorized()
+
+      return HttpResponse.ok({ accessToken })
+    } catch (error) {
+      return HttpResponse.serverError()
     }
+  }
 }
