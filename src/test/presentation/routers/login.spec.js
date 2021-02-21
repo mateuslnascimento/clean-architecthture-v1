@@ -1,7 +1,8 @@
 'use strict'
 
 const LoginRouter = require('../../../presentation/routers/login')
-const { MissingParamError, InvalidParamError, UnauthorizedError, ServerError } = require('../../../presentation/errors')
+const { UnauthorizedError, ServerError } = require('../../../presentation/errors')
+const { MissingParamError, InvalidParamError } = require('../../../utils/errors')
 
 const makeSut = () => {
   const authUseCaseSpy = makeAuthUseCase()
