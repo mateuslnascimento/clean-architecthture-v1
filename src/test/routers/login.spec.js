@@ -1,10 +1,7 @@
 'use strict'
 
 const LoginRouter = require('../../presentation/routers/login')
-const MissingParamError = require('../../presentation/errors/missing-param-error')
-const InvalidParamError = require('../../presentation/errors/invalid-param-error')
-const UnauthorizedError = require('../../presentation/errors/unauthorized-error')
-const ServerError = require('../../presentation/errors/server-error')
+const { MissingParamError, InvalidParamError, UnauthorizedError, ServerError } = require('../../presentation/errors')
 
 const makeSut = () => {
   const authUseCaseSpy = makeAuthUseCase()
@@ -45,7 +42,7 @@ const makeAuthUseCase = () => {
       this.password = password
       return this.accessToken
     }
-  }
+  };
   const authUseCaseSpy = new AuthUsecaseSpy()
   authUseCaseSpy.accessToken = 'valid_token_kasdfkajdsfdsfd'
   return authUseCaseSpy
